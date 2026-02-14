@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 Will You Be My Valentine? 💕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff6b9d;
+            --secondary: #c44569;
+            --accent: #ffa8c5;
+            --dark: #2d1b2e;
+            --light: #fff5f7;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe4f1 25%, #ffd4e9 50%, #ffc9e3 75%, #ffb8db 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating hearts background */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.15;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(10deg);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .question-page, .collage-page {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            font-family: 'Caveat', cursive;
+            font-size: clamp(3rem, 8vw, 5rem);
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(196, 69, 105, 0.2);
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 3rem;
+            opacity: 0.8;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            min-height: 120px;
+        }
+
+        button {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 20px 50px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
+            }
+            50% {
+                box-shadow: 0 12px 30px rgba(255, 107, 157, 0.6);
+            }
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.05) rotate(-2deg);
+            box-shadow: 0 12px 30px rgba(255, 107, 157, 0.5);
+        }
+
+        #noBtn {
+            background: #e8e8e8;
+            color: var(--dark);
+        }
+
+        #noBtn:hover {
+            background: #d4d4d4;
+            transform: scale(0.98);
+        }
+
+        .warning-text {
+            font-family: 'Caveat', cursive;
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin-top: 1rem;
+            font-weight: 700;
+        }
+
+        .consequence-box {
+            margin-top: 2rem;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px) rotate(-2deg); }
+            75% { transform: translateX(10px) rotate(2deg); }
+        }
+
+        .consequence-text {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .consequence-img {
+            max-width: 250px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Collage page styles */
+        .collage-page {
+            display: none;
+        }
+
+        .collage-page.active {
+            display: block;
+        }
+
+        .celebration {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .collage-title {
+            font-family: 'Caveat', cursive;
+            font-size: 3.5rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .photo-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            aspect-ratio: 1;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .photo-item:nth-child(1) { animation-delay: 0.1s; }
+        .photo-item:nth-child(2) { animation-delay: 0.2s; }
+        .photo-item:nth-child(3) { animation-delay: 0.3s; }
+        .photo-item:nth-child(4) { animation-delay: 0.4s; }
+        .photo-item:nth-child(5) { animation-delay: 0.5s; }
+        .photo-item:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .love-note {
+            margin-top: 2rem;
+            font-size: 1.4rem;
+            color: var(--dark);
+            font-style: italic;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            button {
+                font-size: 1.2rem;
+                padding: 15px 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart-bg" id="heartBg"></div>
+    
+    <div class="container">
+        <!-- Question Page -->
+        <div class="question-page" id="questionPage">
+            <h1>Will You Be My Valentine? 💕</h1>
+            <p class="subtitle">This is a very important question...</p>
+            
+            <div class="button-container">
+                <button id="yesBtn">YES! 💖</button>
+                <button id="noBtn">No</button>
+            </div>
+            
+            <p class="warning-text">(Don't you dare click on No Megha. Don't you dareeeeeeee Megha)</p>
+            
+            <div id="consequenceBox" class="consequence-box hidden">
+                <p class="consequence-text" id="consequenceText"></p>
+                <img id="consequenceImg" class="consequence-img hidden" src="" alt="Consequence">
+            </div>
+        </div>
+
+        <!-- Collage Page -->
+        <div class="collage-page" id="collagePage">
+            <div class="celebration">🎉 💕 🎊</div>
+            <h2 class="collage-title">I knew you'd say yes!</h2>
+            
+            <div class="photo-grid" id="photoGrid">
+                <!-- Photos will be added here -->
+                <div class="photo-item">
+                    <img src="https://share.icloud.com/photos/0a3Vsty2YdMZOzJX8PB9Ad7xw" alt="Us">
+                </div>
+                <div class="photo-item">
+                    <img src="https://share.icloud.com/photos/0c3flS4gmQH0YNWSCBRLl9P3Q" alt="Us">
+                </div>
+                <div class="photo-item">
+                    <img src="https://share.icloud.com/photos/063FIgu5-GReLuLOeNDf8MMUA" alt="Us">
+                </div>
+                <div class="photo-item">
+                    <img src="https://share.icloud.com/photos/00fZx5jTSjRGZr8__AS3TTjGA" alt="Us">
+                </div>
+             </div>
+            
+            <p class="love-note">
+                "Here's to all our memories together and all the ones we'll make. 
+                I love you more than words can say! 💕"
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts background
+        function createFloatingHearts() {
+            const heartBg = document.getElementById('heartBg');
+            const hearts = ['💕', '💖', '💗', '💓', '💝'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.animationDuration = (10 + Math.random() * 10) + 's';
+                heartBg.appendChild(heart);
+            }
+        }
+
+        createFloatingHearts();
+
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionPage = document.getElementById('questionPage');
+        const collagePage = document.getElementById('collagePage');
+        const consequenceBox = document.getElementById('consequenceBox');
+        const consequenceText = document.getElementById('consequenceText');
+        const consequenceImg = document.getElementById('consequenceImg');
+
+        let noClickCount = 0;
+        let yesBtnScale = 1;
+
+        // Consequences that show when clicking No
+        const consequences = [
+            {
+                text: "Really? You're going to make me sad? 🥺",
+                image: "https://share.icloud.com/photos/0116RFI_OtVgYaABHwNNYQ7_g"
+            },
+            {
+                text: "Think about all the good times we've had! 💔",
+                image: "https://share.icloud.com/photos/074YftTQPqUsMbwcW85TeBqbg"
+            },
+            {
+                text: "I even dressed up for this! 😢",
+                image: "https://share.icloud.com/photos/036aVSpAsarRhurprT7mxnNRQ"
+            },
+            {
+                text: "This is your last chance to experience this... 🥺👉👈",
+                image: "https://share.icloud.com/photos/04eLM8cvkQHTsmp-40rEOTGAg"
+            },
+            {
+                text: "I won't accept this. The YES button is taking over! 😤",
+                image: "https://share.icloud.com/photos/0be5M7Z6GkBbTEpT6WxD7pUhA"
+            }
+        ];
+
+        // When No button is clicked
+        noBtn.addEventListener('click', () => {
+            noClickCount++;
+            
+            // Increase Yes button size progressively
+            yesBtnScale += 0.3;
+            yesBtn.style.transform = `scale(${yesBtnScale})`;
+            yesBtn.style.transition = 'transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+            
+            // Show consequence
+            if (noClickCount <= consequences.length) {
+                const consequence = consequences[Math.min(noClickCount - 1, consequences.length - 1)];
+                consequenceText.textContent = consequence.text;
+                consequenceImg.src = consequence.image;
+                consequenceImg.classList.remove('hidden');
+                consequenceBox.classList.remove('hidden');
+                
+                // Trigger shake animation
+                consequenceBox.style.animation = 'none';
+                setTimeout(() => {
+                    consequenceBox.style.animation = 'shake 0.5s';
+                }, 10);
+            }
+            
+            // After multiple clicks, make No button smaller
+            if (noClickCount > 2) {
+                const noScale = Math.max(0.1, 1 - (noClickCount * 0.1));
+                noBtn.style.transform = `scale(${noScale})`;
+            }
+        });
+
+        // When Yes button is clicked
+        yesBtn.addEventListener('click', () => {
+            questionPage.style.display = 'none';
+            collagePage.classList.add('active');
+            
+            // Create more hearts
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.textContent = '💖';
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.top = window.innerHeight + 'px';
+                    heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+                    heart.style.zIndex = '9999';
+                    heart.style.pointerEvents = 'none';
+                    document.body.appendChild(heart);
+                    
+                    const duration = 2000 + Math.random() * 2000;
+                    const startTime = Date.now();
+                    
+                    function animateHeart() {
+                        const elapsed = Date.now() - startTime;
+                        const progress = elapsed / duration;
+                        
+                        if (progress < 1) {
+                            const y = window.innerHeight - (progress * (window.innerHeight + 100));
+                            const x = parseFloat(heart.style.left) + Math.sin(progress * Math.PI * 2) * 50;
+                            heart.style.top = y + 'px';
+                            heart.style.left = x + 'px';
+                            heart.style.opacity = 1 - progress;
+                            requestAnimationFrame(animateHeart);
+                        } else {
+                            heart.remove();
+                        }
+                    }
+                    
+                    animateHeart();
+                }, i * 50);
+            }
+        });
+    </script>
+</body>
+</html>
